@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds - Morning (default) */
+  --bg: #FFF8F0;
+  --bg-surface: #FFFFFF;
+  --bg-afternoon: #FAF9F6;
+
+  /* Text */
+  --text-primary: #2C2C2C;
+  --text-secondary: #8C8C8C;
+
+  /* Accent */
+  --accent: #C8956C;
+  --accent-hover: #B07D56;
+
+  /* Semantic */
+  --success: #5A7D5A;
+  --error: #C75B5B;
+  --warning: #C8956C;
+  --info: #6B8CAE;
+  --online-dot: #5A7D5A;
+  --timer-urgent: #C75B5B;
+
+  /* Border */
+  --border: #E8E0D8;
+
+  /* Spacing */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  /* Duration */
+  --duration-micro: 75ms;
+  --duration-short: 150ms;
+  --duration-medium: 300ms;
+  --duration-long: 500ms;
+
+  /* Easing */
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-move: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  --bg: #1C1D2B;
+  --bg-surface: #252636;
+  --text-primary: #E0E0E0;
+  --text-secondary: #8C8C8C;
+  --accent: #D4A574;
+  --accent-hover: #C8956C;
+  --border: #3A3B4F;
+  --online-dot: #6B9E6B;
+  --timer-urgent: #E07070;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-bg: var(--bg);
+  --color-bg-surface: var(--bg-surface);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-online-dot: var(--online-dot);
+  --color-timer-urgent: var(--timer-urgent);
+  --color-border: var(--border);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body), 'Pretendard Variable', sans-serif;
+  transition: background var(--duration-medium) var(--ease-move),
+              color var(--duration-medium) var(--ease-move);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Grain texture overlay */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Timer urgent pulse */
+@keyframes urgent-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.timer-urgent {
+  color: var(--timer-urgent);
+  animation: urgent-pulse 1s ease-in-out infinite;
 }
