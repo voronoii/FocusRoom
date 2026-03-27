@@ -6,6 +6,7 @@ import { getUser } from '@/lib/auth';
 import { usePresence } from '@/hooks/usePresence';
 import { useSession } from '@/hooks/useSession';
 import { useTimeBackground } from '@/hooks/useTimeBackground';
+import { trackEvent } from '@/lib/posthog';
 
 const DURATION_OPTIONS = [25, 50, 90] as const;
 type DurationOption = (typeof DURATION_OPTIONS)[number];
@@ -47,6 +48,7 @@ export default function EntryPage() {
     setEntering(true);
     try {
       await createSession(taskName.trim(), duration);
+      trackEvent('session_start', { task_name: taskName.trim(), duration_minutes: duration });
       router.push('/room');
     } catch {
       setEntering(false);

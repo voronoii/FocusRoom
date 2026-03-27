@@ -3,6 +3,7 @@
 import { useTimer } from '@/hooks/useTimer';
 import type { PresenceState } from '@/lib/supabase';
 import type { NpcAvatar } from '@/lib/npc';
+import { Avatar } from '@/components/Avatar';
 
 type AvatarItem = (PresenceState & { emoji?: string }) | NpcAvatar;
 
@@ -18,7 +19,7 @@ function AvatarCard({ item, animationDelay, showWave }: AvatarCardProps) {
     durationMinutes: item.duration_minutes,
   });
 
-  const emoji = (item as NpcAvatar).emoji ?? '🙂';
+  const seed = item.avatar_seed ?? ((item as NpcAvatar).id ?? (item as PresenceState).user_id);
   const taskDisplay = item.task_name.length > 15
     ? item.task_name.slice(0, 15) + '…'
     : item.task_name;
@@ -42,7 +43,7 @@ function AvatarCard({ item, animationDelay, showWave }: AvatarCardProps) {
           👋
         </div>
       )}
-      <span className="text-3xl leading-none">{emoji}</span>
+      <Avatar seed={seed} size={48} />
       <span className="text-xs text-text-secondary truncate max-w-[80px] text-center">
         {item.display_name}
       </span>

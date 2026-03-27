@@ -1,9 +1,10 @@
 'use client';
 
 import { useTimer } from '@/hooks/useTimer';
+import { Avatar } from '@/components/Avatar';
 
 interface TimerBarProps {
-  emoji: string;
+  avatarSeed: string;
   displayName: string;
   taskName: string;
   startedAt: string;
@@ -13,7 +14,7 @@ interface TimerBarProps {
 }
 
 export function TimerBar({
-  emoji,
+  avatarSeed,
   displayName,
   taskName,
   startedAt,
@@ -36,7 +37,7 @@ export function TimerBar({
         borderBottom: '1px solid var(--border)',
       }}
     >
-      <span className="text-2xl flex-shrink-0">{emoji}</span>
+      <Avatar seed={avatarSeed} size={32} />
       <div className="flex flex-col min-w-0 flex-1">
         <span className="text-xs text-text-secondary truncate">{displayName}</span>
         <span className="text-sm font-medium text-text-primary truncate">{taskName}</span>

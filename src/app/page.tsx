@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { signInAsGuest, signInWithEmail, signUpWithEmail } from '@/lib/auth';
 import { usePresence } from '@/hooks/usePresence';
 import { useTimeBackground } from '@/hooks/useTimeBackground';
+import { trackEvent, identifyUser } from '@/lib/posthog';
 
 type EmailMode = 'signup' | 'login';
 
@@ -58,7 +59,11 @@ export default function AuthPage() {
     setGuestLoading(true);
     setError(null);
     try {
-      await signInAsGuest();
+      const data = await signInAsGuest();
+      if (data.user) {
+        identifyUser(data.user.id);
+        trackEvent('guest_signup');
+      }
       router.push('/entry');
     } catch (e) {
       setError(e instanceof Error ? e.message : '오류가 발생했어요. 다시 시도해주세요.');
@@ -72,9 +77,16 @@ export default function AuthPage() {
     setError(null);
     try {
       if (emailMode === 'signup') {
-        await signUpWithEmail(email, password);
+        const data = await signUpWithEmail(email, password);
+        if (data.user) {
+          identifyUser(data.user.id, { email: data.user.email });
+          trackEvent('email_signup');
+        }
       } else {
-        await signInWithEmail(email, password);
+        const data = await signInWithEmail(email, password);
+        if (data.user) {
+          identifyUser(data.user.id, { email: data.user.email });
+        }
       }
       router.push('/entry');
     } catch (e) {

@@ -16,7 +16,9 @@ import {
 } from '@/lib/sound';
 import { TimerBar } from '@/components/TimerBar';
 import { AvatarGrid } from '@/components/AvatarGrid';
+import { Avatar } from '@/components/Avatar';
 import type { PresenceState } from '@/lib/supabase';
+import { trackEvent } from '@/lib/posthog';
 
 type GridItem = (PresenceState & { emoji?: string }) | NpcAvatar;
 
@@ -34,6 +36,7 @@ export default function RoomPage() {
   const [isTimedOut, setIsTimedOut] = useState(false);
 
   const [isOffline, setIsOffline] = useState(false);
+  const [myAvatarSeed, setMyAvatarSeed] = useState<string>('default');
 
   useEffect(() => {
     const handleOffline = () => setIsOffline(true);
@@ -103,6 +106,7 @@ export default function RoomPage() {
 
     const timerActivate = setTimeout(() => {
       setTimerStarted(true);
+      trackEvent('room_joined');
     }, 1500);
 
     return () => {
@@ -126,6 +130,7 @@ export default function RoomPage() {
         .single();
 
       if (profile && activeSession) {
+        setMyAvatarSeed(profile.avatar_seed);
         await trackPresence({
           user_id: user.id,
           display_name: profile.display_name,
@@ -172,20 +177,36 @@ export default function RoomPage() {
 
   const handleComplete = useCallback(async () => {
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    if (activeSession) {
+      const actualDuration = Math.round(
+        (Date.now() - new Date(activeSession.started_at).getTime()) / 60000
+      );
+      trackEvent('session_completed', {
+        task_name: activeSession.task_name,
+        duration_minutes: activeSession.duration_minutes,
+        actual_duration: actualDuration,
+      });
+    }
     try {
       await completeSession();
     } catch {
       // ignore — still redirect
     }
     router.push('/result?status=completed');
-  }, [completeSession, router]);
+  }, [activeSession, completeSession, router]);
 
   const handleTimeout = useCallback(() => {
+    if (activeSession) {
+      trackEvent('session_timeout', {
+        task_name: activeSession.task_name,
+        duration_minutes: activeSession.duration_minutes,
+      });
+    }
     setIsTimedOut(true);
     setTimeout(() => {
       router.push('/result?status=timeout');
     }, 800);
-  }, [router]);
+  }, [activeSession, router]);
 
   const handleSoundToggle = () => {
     const next = !isMuted;
@@ -221,7 +242,7 @@ export default function RoomPage() {
       {/* Sticky timer bar */}
       {timerStarted && (
         <TimerBar
-          emoji="🦊"
+          avatarSeed={myAvatarSeed ?? 'default'}
           displayName="나"
           taskName={activeSession.task_name}
           startedAt={activeSession.started_at}

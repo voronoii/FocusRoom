@@ -50,6 +50,7 @@ function ResultContent() {
     setConvertError('');
     try {
       await convertGuestToEmail(email, password);
+      trackEvent('guest_to_email');
       setConvertSuccess(true);
       setIsGuest(false);
     } catch (err: unknown) {
