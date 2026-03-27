@@ -70,7 +70,7 @@ function ResultContent() {
           <div className="text-5xl mb-3">{isCompleted ? '🎉' : '⏱'}</div>
           <h1
             className="text-2xl font-bold mb-1"
-            style={{ fontFamily: 'var(--font-fraunces)' }}
+            style={{ fontFamily: 'var(--font-instrument-serif)' }}
           >
             {isCompleted ? '미션 완료!' : '타임아웃'}
           </h1>
@@ -82,7 +82,7 @@ function ResultContent() {
         {/* Re-enter CTA */}
         <button
           onClick={handleRecommit}
-          className="w-full py-3.5 rounded-[10px] bg-[#2C2C2C] text-white font-semibold text-[15px] transition-colors hover:bg-[#1a1a1a] dark:bg-[#E0E0E0] dark:text-[#1C1D2B] dark:hover:bg-[#ccc]"
+          className="w-full py-3.5 rounded-[10px] bg-accent text-accent-text font-semibold text-[15px] transition-opacity hover:opacity-85"
         >
           다시 입장하기
         </button>
@@ -112,14 +112,14 @@ function ResultContent() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="이메일"
-                  className="w-full border border-border rounded-[10px] py-2.5 px-3 bg-bg-surface text-text-primary placeholder:text-text-secondary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15 text-sm"
+                  className="w-full border border-border rounded-[10px] py-2.5 px-3 bg-bg-surface text-text-primary placeholder:text-text-muted focus:border-text-secondary focus:outline-none focus:ring-0 text-sm"
                 />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="비밀번호 (6자 이상)"
-                  className="w-full border border-border rounded-[10px] py-2.5 px-3 bg-bg-surface text-text-primary placeholder:text-text-secondary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15 text-sm"
+                  className="w-full border border-border rounded-[10px] py-2.5 px-3 bg-bg-surface text-text-primary placeholder:text-text-muted focus:border-text-secondary focus:outline-none focus:ring-0 text-sm"
                 />
                 {convertError && (
                   <p className="text-xs text-error">{convertError}</p>
@@ -127,7 +127,7 @@ function ResultContent() {
                 <button
                   onClick={handleConvert}
                   disabled={converting || !email || password.length < 6}
-                  className="w-full py-2.5 rounded-[10px] bg-accent text-white font-medium text-sm transition-colors hover:bg-accent-hover disabled:opacity-50"
+                  className="w-full py-2.5 rounded-[10px] bg-accent text-accent-text font-medium text-sm transition-opacity hover:opacity-85 disabled:opacity-50"
                 >
                   {converting ? '이관 중...' : '기록 저장하기'}
                 </button>

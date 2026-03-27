@@ -10,8 +10,8 @@ export function getTimeOfDay(): TimeOfDay {
 export function getBackgroundColor(time: TimeOfDay): string {
   switch (time) {
     case 'morning': return '#FFF8F0';
-    case 'afternoon': return '#FAF9F6';
-    case 'evening': return '#1C1D2B';
+    case 'afternoon': return '#FFFFFF';
+    case 'evening': return '#1A1B2E';
   }
 }
 

@@ -110,7 +110,7 @@ export default function AuthPage() {
         <div className="flex flex-col gap-1.5">
           <h1
             className="text-3xl font-semibold text-text-primary"
-            style={{ fontFamily: 'var(--font-fraunces)' }}
+            style={{ fontFamily: 'var(--font-instrument-serif)' }}
           >
             FocusRoom
           </h1>
@@ -136,8 +136,8 @@ export default function AuthPage() {
           <button
             onClick={handleGuestSignIn}
             disabled={guestLoading}
-            className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-white transition-opacity disabled:opacity-60"
-            style={{ backgroundColor: 'var(--text-primary)' }}
+            className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-accent-text transition-opacity disabled:opacity-60"
+            style={{ backgroundColor: 'var(--accent)' }}
           >
             {guestLoading ? '확인 중...' : '바로 시작하기 (게스트)'}
           </button>
@@ -170,7 +170,7 @@ export default function AuthPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-[10px] border border-border bg-bg-surface text-text-primary text-[15px] placeholder:text-text-secondary outline-none focus:border-text-secondary transition-colors"
+                className="w-full px-4 py-3 rounded-[10px] border border-border bg-bg-surface text-text-primary text-[15px] placeholder:text-text-muted outline-none focus:border-text-secondary transition-colors"
               />
               <input
                 type="password"
@@ -179,7 +179,7 @@ export default function AuthPage() {
                 onChange={e => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 rounded-[10px] border border-border bg-bg-surface text-text-primary text-[15px] placeholder:text-text-secondary outline-none focus:border-text-secondary transition-colors"
+                className="w-full px-4 py-3 rounded-[10px] border border-border bg-bg-surface text-text-primary text-[15px] placeholder:text-text-muted outline-none focus:border-text-secondary transition-colors"
               />
 
               {error && (
@@ -189,8 +189,8 @@ export default function AuthPage() {
               <button
                 type="submit"
                 disabled={emailLoading}
-                className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-white transition-opacity disabled:opacity-60"
-                style={{ backgroundColor: 'var(--text-primary)' }}
+                className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-accent-text transition-opacity disabled:opacity-60"
+                style={{ backgroundColor: 'var(--accent)' }}
               >
                 {emailLoading
                   ? '확인 중...'

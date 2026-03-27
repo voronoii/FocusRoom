@@ -49,8 +49,7 @@ export function TimerBar({
       </span>
       <button
         onClick={onComplete}
-        className="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium text-white transition-opacity hover:opacity-80 active:opacity-60"
-        style={{ backgroundColor: 'var(--accent)' }}
+        className="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium bg-accent text-accent-text transition-opacity hover:opacity-80 active:opacity-60"
       >
         ✓ 완료했어요
       </button>

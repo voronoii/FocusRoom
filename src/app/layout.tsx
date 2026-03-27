@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PostHogProvider } from '@/components/PostHogProvider';
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -42,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${fraunces.variable} ${plusJakarta.variable} ${geistMono.variable} h-full`}
+      className={`${instrumentSerif.variable} ${plusJakarta.variable} ${geistMono.variable} h-full`}
     >
       <head>
         <link

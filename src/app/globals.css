@@ -3,27 +3,28 @@
 :root {
   /* Backgrounds - Morning (default) */
   --bg: #FFF8F0;
-  --bg-surface: #FFFFFF;
-  --bg-afternoon: #FAF9F6;
+  --bg-surface: rgba(255,255,255,0.6);
+  --bg-afternoon: #FFFFFF;
 
   /* Text */
-  --text-primary: #2C2C2C;
-  --text-secondary: #8C8C8C;
+  --text-primary: #1A1A1A;
+  --text-secondary: #7A7A7A;
+  --text-muted: #ABABAB;
 
-  /* Accent */
-  --accent: #C8956C;
-  --accent-hover: #B07D56;
+  /* Accent (achromatic — no brand color) */
+  --accent: #1A1A1A;
+  --accent-text: #FFFFFF;
 
   /* Semantic */
-  --success: #5A7D5A;
-  --error: #C75B5B;
-  --warning: #C8956C;
-  --info: #6B8CAE;
-  --online-dot: #5A7D5A;
-  --timer-urgent: #C75B5B;
+  --success: #2E7D32;
+  --error: #E53935;
+  --warning: #E65100;
+  --info: #1565C0;
+  --online-dot: #4CAF50;
+  --timer-urgent: #E53935;
 
   /* Border */
-  --border: #E8E0D8;
+  --border: rgba(0,0,0,0.06);
 
   /* Spacing */
   --space-2xs: 2px;
@@ -51,18 +52,24 @@
   --ease-enter: cubic-bezier(0, 0, 0.2, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --ease-move: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Grain */
+  --grain-opacity: 0.03;
 }
 
 .dark {
-  --bg: #1C1D2B;
-  --bg-surface: #252636;
-  --text-primary: #E0E0E0;
-  --text-secondary: #8C8C8C;
-  --accent: #D4A574;
-  --accent-hover: #C8956C;
-  --border: #3A3B4F;
-  --online-dot: #6B9E6B;
-  --timer-urgent: #E07070;
+  --bg: #1A1B2E;
+  --bg-surface: rgba(255,255,255,0.06);
+  --text-primary: #E8E8EC;
+  --text-secondary: #9090A0;
+  --text-muted: #606070;
+  --accent: #E8E8EC;
+  --accent-text: #1A1B2E;
+  --border: rgba(255,255,255,0.08);
+  --online-dot: #66BB6A;
+  --timer-urgent: #FF6B6B;
+  --success: #66BB6A;
+  --grain-opacity: 0.04;
 }
 
 @theme inline {
@@ -70,8 +77,9 @@
   --color-bg-surface: var(--bg-surface);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
@@ -79,7 +87,7 @@
   --color-online-dot: var(--online-dot);
   --color-timer-urgent: var(--timer-urgent);
   --color-border: var(--border);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-instrument-serif);
   --font-body: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
 }
@@ -87,9 +95,10 @@
 body {
   background: var(--bg);
   color: var(--text-primary);
-  font-family: var(--font-body), 'Pretendard Variable', sans-serif;
-  transition: background var(--duration-medium) var(--ease-move),
+  font-family: 'Pretendard Variable', var(--font-body), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  transition: background 0.8s var(--ease-move),
               color var(--duration-medium) var(--ease-move);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Grain texture overlay */
@@ -97,7 +106,7 @@ body {
   content: '';
   position: fixed;
   inset: 0;
-  opacity: 0.03;
+  opacity: var(--grain-opacity);
   pointer-events: none;
   z-index: 50;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -113,4 +122,29 @@ body {
 .timer-urgent {
   color: var(--timer-urgent);
   animation: urgent-pulse 1s ease-in-out infinite;
+}
+
+/* Avatar grid animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes waveHide {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  70% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
+
+/* Toast animation */
+@keyframes toast-slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

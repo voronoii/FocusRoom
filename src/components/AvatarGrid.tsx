@@ -66,18 +66,6 @@ interface AvatarGridProps {
 
 export function AvatarGrid({ items, waveNpcIds }: AvatarGridProps) {
   return (
-    <>
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes waveHide {
-          0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-          70% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-          100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
-        }
-      `}</style>
       <div className="grid grid-cols-3 md:grid-cols-4 gap-6 px-4 py-4">
         {items.map((item, i) => (
           <AvatarCard
@@ -90,6 +78,5 @@ export function AvatarGrid({ items, waveNpcIds }: AvatarGridProps) {
           />
         ))}
       </div>
-    </>
   );
 }

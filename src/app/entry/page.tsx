@@ -89,7 +89,7 @@ export default function EntryPage() {
             onChange={e => setTaskName(e.target.value.slice(0, 30))}
             placeholder="오늘 할 일을 입력해주세요"
             maxLength={30}
-            className="border border-border rounded-[10px] py-3 px-3.5 bg-bg-surface w-full text-text-primary placeholder:text-text-secondary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15 transition-colors duration-[150ms]"
+            className="border border-border rounded-[10px] py-3 px-3.5 bg-bg-surface w-full text-text-primary placeholder:text-text-muted focus:border-text-secondary focus:outline-none focus:ring-0 transition-colors duration-[150ms]"
             onKeyDown={e => {
               if (e.key === 'Enter') handleEnter();
             }}
@@ -106,8 +106,8 @@ export default function EntryPage() {
                 onClick={() => setDuration(opt)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-[150ms] ${
                   duration === opt
-                    ? 'bg-accent text-white'
-                    : 'bg-[#F5F0EB] text-text-primary'
+                    ? 'border border-accent text-text-primary font-semibold'
+                    : 'bg-bg-surface text-text-secondary border border-border'
                 }`}
               >
                 {opt}분
@@ -120,7 +120,7 @@ export default function EntryPage() {
         <button
           onClick={handleEnter}
           disabled={!taskName.trim() || entering}
-          className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-white transition-opacity duration-[150ms] disabled:opacity-40"
+          className="w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-accent-text transition-opacity duration-[150ms] disabled:opacity-40"
           style={{ backgroundColor: 'var(--accent)' }}
         >
           {entering ? '입장 중...' : '입장하기'}
